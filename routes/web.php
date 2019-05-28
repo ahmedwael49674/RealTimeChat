@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::post('/storeUser', 'MessagesController@store')->name('storeUser');
+
+Auth::routes();
+
+Route::get('/', 'HomeController@index')->name('home');
