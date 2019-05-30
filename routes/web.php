@@ -11,9 +11,11 @@
 |
 */
 
-Route::post('/message/store', 'MessagesController@store')->name('storeUser');
-Route::get('/message/index', 'MessagesController@index');
 
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+
+Route::post('/message/store', 'MessagesController@store');
+Route::get('/message/index', 'MessagesController@index');
+Route::get('/friend/index', 'FriendsController@index');

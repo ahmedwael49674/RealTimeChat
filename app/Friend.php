@@ -18,5 +18,10 @@ class Friend extends Model
     {
         return $this->hasMany('App\Message','friend_id');
     }
+    
+    public function LastMessage()
+    {
+        return $this->hasOne('App\Message','friend_id')->latest();
+    }
 
 }

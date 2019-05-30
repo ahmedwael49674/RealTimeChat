@@ -7,6 +7,7 @@ var vm = new Vue({
     data: {
         isActive: false,
         messages: [],
+        friends: [],
         content: '',
     },
     methods: {
@@ -23,9 +24,16 @@ var vm = new Vue({
                     this.scrollDown();
                 })
         },
+        getFirends: function () {
+            axios.get('/friend/index')
+                .then((response) => {
+                    this.friends = response.data;
+                })
+        },
         listen: function () {
             socket.on('newMessageChannel:App\\Events\\newMessage', function (data) {
                 this.messages.push(data.message);
+                this.friends[0].last_message.content = data.message.content;
                 this.scrollDown();
             }.bind(this));
         },
@@ -33,12 +41,14 @@ var vm = new Vue({
             this.isActive = this.isActive === true ? false : true;
         },
         scrollDown: function () {
-            var objDiv = document.getElementById("messages");
-            objDiv.scrollTop = objDiv.scrollHeight;
+            var objDiv          = document.getElementById("messages");
+            objDiv.scrollTop    = objDiv.scrollHeight;
         },
     },
     mounted() {
         this.getLastConversation();
+        this.getFirends();
         this.listen();
+
     },
 });

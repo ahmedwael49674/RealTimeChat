@@ -32,22 +32,18 @@
         </div>
         <div id="contacts">
             <ul>
-                @foreach ($friends as $index=>$friend)
-                <li class="contact" @if($index==0)class='active' @endif>
+                <li class="contact" v-for='(friend,index) in friends' :class="{ 'active': index === 0 }">
                     <div class="wrap">
-                        <span class="contact-status {{$friend->user->status->name}}"></span>
-                        <img src="{{$friend->user->image}}" alt="" />
+                        <span class="contact-status" :class='friend.user.status.name'></span>
+                        <img :src="friend.user.image" alt="" />
                         <div class="meta">
-                            <p class="name">{{$friend->user->name}}</p>
+                            <p class="name" v-text='friend.user.name'></p>
                             <p class="preview">
-                                {{ mb_substr($friend->messages->first()->content, 0, 100, 'utf-8') }}
-                                {{ strlen($friend->messages->first()->content) > 100 ? '...' : "" }}
+                                @{{friend.last_message.content.substring(0, 100)}}
                             </p>
                         </div>
                     </div>
                 </li>
-                @endforeach
-
             </ul>
         </div>
         <div id="bottom-bar">
