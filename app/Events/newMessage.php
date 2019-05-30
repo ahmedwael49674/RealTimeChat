@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -10,20 +11,21 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class newName implements ShouldBroadcast
+class newMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $newName;
+    public $message;
+
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($newName)
+    public function __construct(Message $message)
     {
-        $this->newName  = $newName;
+        $this->message      = $message;
     }
     
     /**
@@ -33,6 +35,7 @@ class newName implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('testChannel');
+        return new Channel('newMessageChannel');
     }
+
 }

@@ -25,24 +25,24 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user               =   User::with('status:id,name')->findOrFail(auth::id());
-        $friends            =   Friend::whereUserOne(auth::id())
-                                        ->OrWhere('user_two','=',auth::id())
-                                        ->with('user.status:id,name')
-                                        ->with(['messages' => function ($query) {
-                                            $query->pluck('id','content');
-                                            $query->latest();}])
-                                        ->whereHas('messages')
-                                        ->get();
+        $user                   =   User::with('status:id,name')->findOrFail(auth::id());
+        $friends                =   Friend::whereUserOne(auth::id())
+                                            ->OrWhere('user_two','=',auth::id())
+                                            ->with('user.status:id,name')
+                                            ->with(['messages' => function ($query) {
+                                                $query->pluck('id','content');
+                                                $query->latest();}])
+                                            ->whereHas('messages')
+                                            ->get();
 
-        $LastFriend            =   Friend::whereUserOne(auth::id())
+        $LastFriendConversation =   Friend::whereUserOne(auth::id())
                                             ->orWhere('user_two',auth::id())
                                             ->whereHas('messages')
-                                            ->with('messages.user')
                                             ->latest()
                                             ->first();
-
-        $statuses           =   Status::all();
-        return view('home',compact('user','statuses','friends','LastFriend'));
+        $FriendId               =   $LastFriendConversation->user_one  ==  auth::id() ? $LastFriendConversation->user_two : $LastFriendConversation->user_one;
+        $LastFriend             =   User::findOrFail($FriendId);
+        $statuses               =   Status::all();
+        return view('home',compact('user','statuses','friends','LastFriend','LastFriendConversation'));
     }
 }

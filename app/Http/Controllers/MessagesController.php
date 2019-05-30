@@ -2,31 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\newName;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
+use App\Events\newMessage;
+use App\{Message,Friend};
+use Auth;
 
 class MessagesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -35,59 +18,31 @@ class MessagesController extends Controller
      */
     public function store(Request $request)
     {
-        // $data   =   [
-        // 'event' => 'newName',
-        // 'data' =>[
-        //     'userName' => $request->newName,
-        //     ]
-        // ];
-        // Redis::publish('test-Channel',json_encode($data));  
-        event(new newName($request->newName));
+        $message                =   new Message();
+        $message->content       =   $request->content;
+        $message->friend_id     =   $request->friendId;
+        $message->user_id       =   auth::id();
+        $message->save();
+        $message->load('user');
+        event(new newMessage($message));
         return 'true';
-   }
+    }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function index()
     {
-        //
-    }
+        $LastAuthConversationId        =   Message::WhereHas('friend',function($query){
+                                                $query->whereUserOne(auth::id());
+                                                $query->Orwhere('user_two','=',auth::id());})
+                                            ->latest()
+                                            ->first()
+                                            ->friend_id;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $messages                      =    Message::whereFriendId($LastAuthConversationId)->with('user')->oldest()->get();
+        return $messages->toJson();
     }
 }

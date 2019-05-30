@@ -11,7 +11,8 @@
 |
 */
 
-Route::post('/storeUser', 'MessagesController@store')->name('storeUser');
+Route::post('/message/store', 'MessagesController@store')->name('storeUser');
+Route::get('/message/index', 'MessagesController@index');
 
 Auth::routes();
 

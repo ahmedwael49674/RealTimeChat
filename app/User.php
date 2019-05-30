@@ -37,4 +37,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Status');
     }
+
+    public function getImageAttribute($value)
+    {
+
+        return asset('storage/userImages/' .$value);
+    }
 }
