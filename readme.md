@@ -28,6 +28,7 @@ more like messenger you can send and reply messages to your friends.
  4. message: store message content and the sender id as user_id and friend_id which is the friendship id from table friends (with this id make it easier to get all conversation messages)
  
 ## How to run?
+before the steps make sure you have install node.js and redis
 1. git clone the project
 2. composer install
 3. npm install
@@ -35,5 +36,6 @@ more like messenger you can send and reply messages to your friends.
 5. copy .env.exmple to .env and change database username and password
 6. run the migrations (php artisan migrate)
 7. run the seeder (php artisan db:seed)
-8. run socket.js (node socket.js)
-9. run the project (php artisan serve)
+8. run redis.exe
+9. run socket.js (node socket.js)
+10. run the project (php artisan serve)
