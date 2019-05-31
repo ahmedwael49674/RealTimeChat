@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{User,Status,Friend,Message};
+use App\{User,Friend};
 use Illuminate\Http\Request;
 use Auth;
 
@@ -25,7 +25,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user                   =   User::with('status:id,name')->findOrFail(auth::id());
         $LastFriendConversation =   Friend::whereUserOne(auth::id())
                                             ->orWhere('user_two',auth::id())
                                             ->whereHas('messages')
@@ -33,7 +32,6 @@ class HomeController extends Controller
                                             ->first();
         $FriendId               =   $LastFriendConversation->user_one  ==  auth::id() ? $LastFriendConversation->user_two : $LastFriendConversation->user_one;
         $LastFriend             =   User::findOrFail($FriendId);
-        $statuses               =   Status::all();
-        return view('home',compact('user','statuses','LastFriend','LastFriendConversation'));
+        return view('home',compact('LastFriend','LastFriendConversation'));
     }
 }

@@ -12,17 +12,17 @@
     <div id="sidepanel">
         <div id="profile">
             <div class="wrap">
-                <img id="profile-img" src="{{$user->image}}" class="{{$user->status->name}}" @click='toggle()' />
-                <p>{{$user->name}}</p>
+                <img id="profile-img" :src="user.image" :class="user.status.name" @click='toggle()' />
+                <p v-text='user.name'></p>
                 <div id="status-options" :class='{ active: isActive }'>
                     <ul>
-                        @foreach ($statuses as $status)
-                        <li id="status-{{$status->name}}" @if($status->id == $user->status_id)
-                            class="active" @endif onclick='active("status-{{$status->name}}")'>
+                        <li v-for='status in statuses' :id="'status-'+status.name"
+                            :class='{ active: status.id === user.status_id }'
+                            {{-- @click='active("status-"+status.name)' --}}
+                            >
                             <span class="status-circle"></span>
-                            <p>{{$status->name}}</p>
+                            <p v-text='status.name'></p>
                         </li>
-                        @endforeach
                 </div>
             </div>
         </div>
@@ -32,10 +32,10 @@
         </div>
         <div id="contacts">
             <ul>
-                <li class="contact" v-for='(friend,index) in friends' :class="{ 'active': index === 0 }">
+                <li class="contact" v-for='(friend,index) in friends' :class="{ 'active': index == 0 }">
                     <div class="wrap">
                         <span class="contact-status" :class='friend.user.status.name'></span>
-                        <img :src="friend.user.image" alt="" />
+                        <img :src="friend.user.image" />
                         <div class="meta">
                             <p class="name" v-text='friend.user.name'></p>
                             <p class="preview">
@@ -47,8 +47,10 @@
             </ul>
         </div>
         <div id="bottom-bar">
-            <button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add
-                    contact</span></button>
+            <button id="addcontact">
+                <i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> 
+                <span>Add contact</span>
+            </button>
             <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
         </div>
     </div>
@@ -83,4 +85,4 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 <script type="text/javascript" src="{{ asset('js/chat.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/broadcast.js')}}"></script>
-@endsection
+@endsection 

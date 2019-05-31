@@ -8,6 +8,8 @@ var vm = new Vue({
         isActive: false,
         messages: [],
         friends: [],
+        statuses: [],
+        user: {},
         content: '',
     },
     methods: {
@@ -21,13 +23,27 @@ var vm = new Vue({
             axios.get('/message/index')
                 .then((response) => {
                     this.messages = response.data;
-                    this.scrollDown();
                 })
+            this.getFirends();
         },
         getFirends: function () {
             axios.get('/friend/index')
                 .then((response) => {
                     this.friends = response.data;
+                })
+            this.getStatues();
+        },
+        getStatues: function () {
+            axios.get('/status/index')
+                .then((response) => {
+                    this.statuses = response.data;
+                })
+            this.getAuth();
+        },
+        getAuth: function () {
+            axios.get('/user/getAuth')
+                .then((response) => {
+                    this.user = response.data;
                 })
         },
         listen: function () {
@@ -41,14 +57,12 @@ var vm = new Vue({
             this.isActive = this.isActive === true ? false : true;
         },
         scrollDown: function () {
-            var objDiv          = document.getElementById("messages");
-            objDiv.scrollTop    = objDiv.scrollHeight;
+            var objDiv = document.getElementById("messages");
+            objDiv.scrollTop = objDiv.scrollHeight;
         },
     },
     mounted() {
         this.getLastConversation();
-        this.getFirends();
         this.listen();
-
     },
 });

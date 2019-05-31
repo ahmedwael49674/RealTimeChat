@@ -19,3 +19,5 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::post('/message/store', 'MessagesController@store');
 Route::get('/message/index', 'MessagesController@index');
 Route::get('/friend/index', 'FriendsController@index');
+Route::get('/status/index', 'StatusesController@index');
+Route::get('/user/getAuth', 'UsersController@getAuth');
