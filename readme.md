@@ -27,7 +27,7 @@ more like messenger you can send and reply messages to your friends.
  3. friends: it's a many-to-many relationship with the user as (user_one, user_two) used to store friendship and give it id.
  4. message: store message content and the sender id as user_id and friend_id which is the friendship id from table friends (with this id make it easier to get all conversation messages)
  
-##How to run?
+## How to run?
 1. git clone the project
 2. composer install
 3. npm install
