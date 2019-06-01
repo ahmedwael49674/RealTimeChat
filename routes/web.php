@@ -21,3 +21,4 @@ Route::get('/message/index', 'MessagesController@index');
 Route::get('/friend/index', 'FriendsController@index');
 Route::get('/status/index', 'StatusesController@index');
 Route::get('/user/getAuth', 'UsersController@getAuth');
+Route::post('/status/update', 'StatusesController@update');

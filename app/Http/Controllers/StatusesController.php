@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Status;
+use App\{Status,User};
+use Auth;
 
 class StatusesController extends Controller
 {
@@ -25,8 +26,12 @@ class StatusesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request)
+    {   
+        $status             =   Status::findOrFail($request->statusId);
+        $user               =   User::findOrFail(Auth::id());
+        $user->status_id    =   $request->statusId;
+        $user->save();
+        return $status->name;
     }
 }

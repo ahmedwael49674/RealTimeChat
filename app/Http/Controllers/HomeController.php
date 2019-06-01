@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\{User,Friend};
 use Illuminate\Http\Request;
+use App\{User,Friend};
 use Auth;
 
 class HomeController extends Controller

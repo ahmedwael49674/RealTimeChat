@@ -4,7 +4,7 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
-<link href="{{ asset('css/chat.css') }}" rel="stylesheet">
+<link rel='stylesheet' href="{{ asset('css/chat.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -18,8 +18,7 @@
                     <ul>
                         <li v-for='status in statuses' :id="'status-'+status.name"
                             :class='{ active: status.id === user.status_id }'
-                            {{-- @click='active("status-"+status.name)' --}}
-                            >
+                            @click='activeStatus(status.id)'>
                             <span class="status-circle"></span>
                             <p v-text='status.name'></p>
                         </li>
@@ -56,7 +55,7 @@
     </div>
     <div class="content">
         <div class="contact-profile">
-            <img src="{{$LastFriend->image}}" alt="" />
+            <img src="{{$LastFriend->image}}"/>
             <p>{{$LastFriend->name}}</p>
         </div>
         <div class="messages" id="messages">
@@ -83,6 +82,5 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-<script type="text/javascript" src="{{ asset('js/chat.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/broadcast.js')}}"></script>
 @endsection 

@@ -56,6 +56,15 @@ var vm = new Vue({
         toggle: function () {
             this.isActive = this.isActive === true ? false : true;
         },
+        activeStatus: function (statusId) {
+            axios.post('/status/update', {
+                statusId: statusId,
+            }).then((response) => {
+                this.user.status_id   = statusId,
+                this.user.status.name = response.data,
+                this.isActive         = false
+            });
+        },
         scrollDown: function () {
             var objDiv = document.getElementById("messages");
             objDiv.scrollTop = objDiv.scrollHeight;
