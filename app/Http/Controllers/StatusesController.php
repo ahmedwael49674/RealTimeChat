@@ -28,6 +28,9 @@ class StatusesController extends Controller
      */
     public function update(Request $request)
     {   
+        $request->validate([
+            'statusId' => 'required|exists:statuses',
+        ]);
         $status             =   Status::findOrFail($request->statusId);
         $user               =   User::findOrFail(Auth::id());
         $user->status_id    =   $request->statusId;

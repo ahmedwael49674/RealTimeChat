@@ -17,8 +17,7 @@
                 <div id="status-options" :class='{ active: isActive }'>
                     <ul>
                         <li v-for='status in statuses' :id="'status-'+status.name"
-                            :class='{ active: status.id === user.status_id }'
-                            @click='activeStatus(status.id)'>
+                            :class='{ active: status.id === user.status_id }' @click='activeStatus(status.id)'>
                             <span class="status-circle"></span>
                             <p v-text='status.name'></p>
                         </li>
@@ -47,16 +46,19 @@
         </div>
         <div id="bottom-bar">
             <button id="addcontact">
-                <i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> 
+                <i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>
                 <span>Add contact</span>
             </button>
-            <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
+            <button id="settings">
+                <i class="fa fa-cog fa-fw" aria-hidden="true"></i>
+                <span>Settings</span>
+            </button>
         </div>
     </div>
     <div class="content">
-        <div class="contact-profile">
-            <img src="{{$LastFriend->image}}"/>
-            <p>{{$LastFriend->name}}</p>
+        <div class="contact-profile" v-if='friends[0]'>
+            <img :src="friends[0].user.image" />
+            <p v-text='friends[0].user.name'></p>
         </div>
         <div class="messages" id="messages">
             <ul>
@@ -70,17 +72,12 @@
             <div class="wrap">
                 <form @submit.prevent='Broadcast({{$LastFriendConversation->id}})'>
                     <input type="text" placeholder="Write your message..." v-model='content'>
-                    <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                    <button class="submit">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 @endsection
-@section('Js')
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-<script type="text/javascript" src="{{ asset('js/broadcast.js')}}"></script>
-@endsection 

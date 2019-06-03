@@ -30,8 +30,6 @@ class HomeController extends Controller
                                             ->whereHas('messages')
                                             ->latest()
                                             ->first();
-        $FriendId               =   $LastFriendConversation->user_one  ==  auth::id() ? $LastFriendConversation->user_two : $LastFriendConversation->user_one;
-        $LastFriend             =   User::findOrFail($FriendId);
         return view('home',compact('LastFriend','LastFriendConversation'));
     }
 }

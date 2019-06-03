@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Friends;
 use Illuminate\Http\Request;
 use App\Friend;
 use Auth;
+use DB;
 
 class FriendsController extends Controller
 {
@@ -15,13 +17,18 @@ class FriendsController extends Controller
      */
     public function index()
     {
-        $friends                =   Friend::whereUserOne(auth::id())
-                                            ->OrWhere('user_two','=',auth::id())
-                                            ->with('user.status:id,name')
-                                            ->with(['LastMessage' => function ($query) {
-                                                $query->pluck('id','content');}])
+        $friendsOne                =   Friend::whereUserOne(auth::id())
+                                            ->with('userTwo.status:id,name')
+                                            ->with('LastMessage')
                                             ->whereHas('messages')
                                             ->get();
+        $friendsTwo                =   Friend::whereUserTwo(auth::id())
+                                            ->with('userOne.status:id,name')
+                                            ->with('LastMessage')
+                                            ->whereHas('messages')
+                                            ->get();
+        $friends                    = Friends::MergeFriends($friendsOne, $friendsTwo);
+
         return $friends->toJson();
     }
 

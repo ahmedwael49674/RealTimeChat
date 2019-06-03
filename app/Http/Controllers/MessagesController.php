@@ -37,13 +37,16 @@ class MessagesController extends Controller
     public function index()
     {
         $LastAuthConversationId        =   Message::WhereHas('friend',function($query){
-                                                $query->whereUserOne(auth::id());
-                                                $query->Orwhere('user_two','=',auth::id());})
-                                            ->latest()
-                                            ->first()
-                                            ->friend_id;
+                                                        $query->whereUserOne(auth::id());
+                                                        $query->Orwhere('user_two','=',auth::id());})
+                                                    ->latest()
+                                                    ->first()
+                                                    ->friend_id;
 
-        $messages                      =    Message::whereFriendId($LastAuthConversationId)->with('user')->oldest()->get();
+        $messages                      =    Message::whereFriendId($LastAuthConversationId)
+                                                    ->with('user')
+                                                    ->oldest()
+                                                    ->get();
         return $messages->toJson();
     }
 }
