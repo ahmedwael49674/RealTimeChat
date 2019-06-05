@@ -1,5 +1,5 @@
 # RealTimeChat
-
+ ![alt text](https://github.com/ahmedwael49674/RealTimeChat/blob/master/diagrames/view.jpg)
 ## Summary
 It's a system that allows live transmission of text messages from sender to receive using easily
 accessible web interfaces. It is a type of Internet online chat distinguished by its simplicity and accessibility to users
