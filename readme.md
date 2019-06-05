@@ -1,16 +1,19 @@
 # RealTimeChat
 
-## Intro
-more like messenger you can send and reply messages to your friends.
+## Summary
+It's a system that allows live transmission of text messages from sender to receive using easily
+accessible web interfaces. It is a type of Internet online chat distinguished by its simplicity and accessibility to users
+who do not wish to take the time to install and learn to use specialized chat software (More like messenger)
 
-## used technologies
+## Used technologies
 1. Laravel
 2. Vue.js
-3. Node.JS (with Socket.io package)
+3. Node.JS
 4. Redis
+5. Socket.io
 
-## description
-### sequence  diagram 
+## Description
+### Sequence  diagram 
  ![alt text](https://github.com/ahmedwael49674/RealTimeChat/blob/master/diagrames/sequance.jpg)
 1. node.js subscribe to the channel.
 2. Vue.js listen to the node.js port (which events will be emitted over it).
