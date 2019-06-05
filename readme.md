@@ -1,7 +1,9 @@
 # RealTimeChat
 
-## Intro
-more like messenger you can send and reply messages to your friends.
+## Description
+It's a system that allows live transmission of text messages from sender to receive using easily
+accessible web interfaces. It is a type of Internet online chat distinguished by its simplicity and accessibility to users
+who do not wish to take the time to install and learn to use specialized chat software (More like messenger)
 
 ## used technologies
 1. Laravel
