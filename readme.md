@@ -10,7 +10,7 @@ who do not wish to take the time to install and learn to use specialized chat so
 2. Vue.js
 3. Node.JS
 4. Redis
-5.Socket.io
+5. Socket.io
 
 ## Description
 ### Sequence  diagram 
