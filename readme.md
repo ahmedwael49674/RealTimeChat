@@ -14,7 +14,7 @@ who do not wish to take the time to install and learn to use specialized chat so
 
 ## Description
 ### Sequence  diagram 
- ![alt text](https://github.com/ahmedwael49674/RealTimeChat/blob/master/diagrames/sequance.jpg)
+ ![alt text](https://github.com/ahmedwael49674/RealTimeChat/blob/master/diagrames/sequance1.jpg)
 1. node.js subscribe to the channel.
 2. Vue.js listen to the node.js port (which events will be emitted over it).
 3. user send message to his friend the MessageController will receive it.
